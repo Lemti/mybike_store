@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data noupdate="1">
+
+		<!-- Vélos de Ville -->
+		<record id="bike_city_001" model="product.template">
+			<field name="name">Giant Escape 3 - Noir</field>
+			<field name="bike_category">city</field>
+			<field name="bike_brand">Giant</field>
+			<field name="frame_size">m</field>
+			<field name="wheel_size">28</field>
+			<field name="list_price">450.00</field>
+			<field name="categ_id" ref="product_category_city_bikes"/>
+		</record>
+
+		<record id="bike_city_002" model="product.template">
+			<field name="name">Trek FX 2 - Bleu</field>
+			<field name="bike_category">city</field>
+			<field name="bike_brand">Trek</field>
+			<field name="frame_size">l</field>
+			<field name="wheel_size">28</field>
+			<field name="list_price">520.00</field>
+			<field name="categ_id" ref="product_category_city_bikes"/>
+		</record>
+
+		<record id="bike_city_003" model="product.template">
+			<field name="name">Specialized Sirrus 2.0</field>
+			<field name="bike_category">city</field>
+			<field name="bike_brand">Specialized</field>
+			<field name="frame_size">m</field>
+			<field name="wheel_size">28</field>
+			<field name="list_price">550.00</field>
+			<field name="categ_id" ref="product_category_city_bikes"/>
+		</record>
+
+		<!-- VTT -->
+		<record id="bike_mountain_001" model="product.template">
+			<field name="name">Trek Marlin 7</field>
+			<field name="bike_category">mountain</field>
+			<field name="bike_brand">Trek</field>
+			<field name="frame_size">l</field>
+			<field name="wheel_size">29</field>
+			<field name="list_price">850.00</field>
+			<field name="categ_id" ref="product_category_mountain_bikes"/>
+		</record>
+
+		<record id="bike_mountain_002" model="product.template">
+			<field name="name">Giant Talon 2</field>
+			<field name="bike_category">mountain</field>
+			<field name="bike_brand">Giant</field>
+			<field name="frame_size">m</field>
+			<field name="wheel_size">29</field>
+			<field name="list_price">780.00</field>
+			<field name="categ_id" ref="product_category_mountain_bikes"/>
+		</record>
+
+		<record id="bike_mountain_003" model="product.template">
+			<field name="name">Specialized Rockhopper</field>
+			<field name="bike_category">mountain</field>
+			<field name="bike_brand">Specialized</field>
+			<field name="frame_size">l</field>
+			<field name="wheel_size">29</field>
+			<field name="list_price">920.00</field>
+			<field name="categ_id" ref="product_category_mountain_bikes"/>
+		</record>
+
+		<!-- Vélos Électriques -->
+		<record id="bike_electric_001" model="product.template">
+			<field name="name">Specialized Turbo Vado</field>
+			<field name="bike_category">electric</field>
+			<field name="bike_brand">Specialized</field>
+			<field name="frame_size">m</field>
+			<field name="wheel_size">28</field>
+			<field name="battery_capacity">500</field>
+			<field name="motor_power">250</field>
+			<field name="autonomy_km">120</field>
+			<field name="list_price">2500.00</field>
+			<field name="categ_id" ref="product_category_electric_bikes"/>
+		</record>
+
+		<record id="bike_electric_002" model="product.template">
+			<field name="name">Trek Verve+ 2</field>
+			<field name="bike_category">electric</field>
+			<field name="bike_brand">Trek</field>
+			<field name="frame_size">l</field>
+			<field name="wheel_size">28</field>
+			<field name="battery_capacity">400</field>
+			<field name="motor_power">250</field>
+			<field name="autonomy_km">90</field>
+			<field name="list_price">2200.00</field>
+			<field name="categ_id" ref="product_category_electric_bikes"/>
+		</record>
+
+		<record id="bike_electric_003" model="product.template">
+			<field name="name">Giant Explore E+</field>
+			<field name="bike_category">electric</field>
+			<field name="bike_brand">Giant</field>
+			<field name="frame_size">m</field>
+			<field name="wheel_size">28</field>
+			<field name="battery_capacity">500</field>
+			<field name="motor_power">250</field>
+			<field name="autonomy_km">110</field>
+			<field name="list_price">2400.00</field>
+			<field name="categ_id" ref="product_category_electric_bikes"/>
+		</record>
+
+		<!-- Vélos Enfants -->
+		<record id="bike_kids_001" model="product.template">
+			<field name="name">Trek Precaliber 20</field>
+			<field name="bike_category">kids</field>
+			<field name="bike_brand">Trek</field>
+			<field name="wheel_size">20</field>
+			<field name="list_price">280.00</field>
+			<field name="categ_id" ref="product_category_kids_bikes"/>
+		</record>
+
+		<record id="bike_kids_002" model="product.template">
+			<field name="name">Giant XtC Jr 24</field>
+			<field name="bike_category">kids</field>
+			<field name="bike_brand">Giant</field>
+			<field name="wheel_size">24</field>
+			<field name="list_price">320.00</field>
+			<field name="categ_id" ref="product_category_kids_bikes"/>
+		</record>
+
+		<!-- VÉLOS DE LOCATION - NE PAS VENDRE -->
+		<record id="rental_city_001" model="product.template">
+			<field name="name">Vélo Ville - LOC001</field>
+			<field name="bike_category">city</field>
+			<field name="bike_brand">Giant</field>
+			<field name="frame_size">m</field>
+			<field name="wheel_size">28</field>
+			<field name="is_rental" eval="True"/>
+			<field name="sale_ok" eval="False"/>
+			<field name="rental_price_hour">5.00</field>
+			<field name="rental_price_day">15.00</field>
+			<field name="rental_price_week">60.00</field>
+			<field name="rental_price_month">200.00</field>
+			<field name="rental_deposit">200.00</field>
+			<field name="rental_state">available</field>
+			<field name="serial_number">LOC001</field>
+			<field name="list_price">450.00</field>
+			<field name="categ_id" ref="product_category_city_bikes"/>
+		</record>
+
+		<record id="rental_city_002" model="product.template">
+			<field name="name">Vélo Ville - LOC002</field>
+			<field name="bike_category">city</field>
+			<field name="bike_brand">Trek</field>
+			<field name="frame_size">l</field>
+			<field name="wheel_size">28</field>
+			<field name="is_rental" eval="True"/>
+			<field name="sale_ok" eval="False"/>
+			<field name="rental_price_hour">5.00</field>
+			<field name="rental_price_day">15.00</field>
+			<field name="rental_price_week">60.00</field>
+			<field name="rental_price_month">200.00</field>
+			<field name="rental_deposit">200.00</field>
+			<field name="rental_state">available</field>
+			<field name="serial_number">LOC002</field>
+			<field name="list_price">480.00</field>
+			<field name="categ_id" ref="product_category_city_bikes"/>
+		</record>
+
+		<record id="rental_mountain_001" model="product.template">
+			<field name="name">VTT - LOC003</field>
+			<field name="bike_category">mountain</field>
+			<field name="bike_brand">Trek</field>
+			<field name="frame_size">l</field>
+			<field name="wheel_size">29</field>
+			<field name="is_rental" eval="True"/>
+			<field name="sale_ok" eval="False"/>
+			<field name="rental_price_hour">8.00</field>
+			<field name="rental_price_day">25.00</field>
+			<field name="rental_price_week">100.00</field>
+			<field name="rental_price_month">300.00</field>
+			<field name="rental_deposit">300.00</field>
+			<field name="rental_state">available</field>
+			<field name="serial_number">LOC003</field>
+			<field name="list_price">850.00</field>
+			<field name="categ_id" ref="product_category_mountain_bikes"/>
+		</record>
+
+		<record id="rental_electric_001" model="product.template">
+			<field name="name">Vélo Électrique - LOC004</field>
+			<field name="bike_category">electric</field>
+			<field name="bike_brand">Specialized</field>
+			<field name="frame_size">m</field>
+			<field name="wheel_size">28</field>
+			<field name="battery_capacity">625</field>
+			<field name="motor_power">250</field>
+			<field name="autonomy_km">100</field>
+			<field name="is_rental" eval="True"/>
+			<field name="sale_ok" eval="False"/>
+			<field name="rental_price_hour">10.00</field>
+			<field name="rental_price_day">35.00</field>
+			<field name="rental_price_week">150.00</field>
+			<field name="rental_price_month">450.00</field>
+			<field name="rental_deposit">500.00</field>
+			<field name="rental_state">available</field>
+			<field name="serial_number">LOC004</field>
+			<field name="list_price">2500.00</field>
+			<field name="categ_id" ref="product_category_electric_bikes"/>
+		</record>
+
+		<record id="rental_electric_002" model="product.template">
+			<field name="name">Vélo Électrique - LOC005</field>
+			<field name="bike_category">electric</field>
+			<field name="bike_brand">Trek</field>
+			<field name="frame_size">l</field>
+			<field name="wheel_size">28</field>
+			<field name="battery_capacity">500</field>
+			<field name="motor_power">250</field>
+			<field name="autonomy_km">90</field>
+			<field name="is_rental" eval="True"/>
+			<field name="sale_ok" eval="False"/>
+			<field name="rental_price_hour">10.00</field>
+			<field name="rental_price_day">35.00</field>
+			<field name="rental_price_week">150.00</field>
+			<field name="rental_price_month">450.00</field>
+			<field name="rental_deposit">500.00</field>
+			<field name="rental_state">available</field>
+			<field name="serial_number">LOC005</field>
+			<field name="list_price">2300.00</field>
+			<field name="categ_id" ref="product_category_electric_bikes"/>
+		</record>
+
+		<!-- Accessoires -->
+		<record id="accessory_helmet" model="product.template">
+			<field name="name">Casque Adulte</field>
+			<field name="bike_category">accessory</field>
+			<field name="list_price">35.00</field>
+			<field name="categ_id" ref="product_category_accessories"/>
+		</record>
+
+		<record id="accessory_lock" model="product.template">
+			<field name="name">Antivol U</field>
+			<field name="bike_category">accessory</field>
+			<field name="list_price">45.00</field>
+			<field name="categ_id" ref="product_category_accessories"/>
+		</record>
+
+		<record id="accessory_pump" model="product.template">
+			<field name="name">Pompe Portable</field>
+			<field name="bike_category">accessory</field>
+			<field name="list_price">15.00</field>
+			<field name="categ_id" ref="product_category_accessories"/>
+		</record>
+
+		<record id="accessory_lights" model="product.template">
+			<field name="name">Éclairage LED</field>
+			<field name="bike_category">accessory</field>
+			<field name="list_price">25.00</field>
+			<field name="categ_id" ref="product_category_accessories"/>
+		</record>
+
+		<record id="accessory_bell" model="product.template">
+			<field name="name">Sonnette</field>
+			<field name="bike_category">accessory</field>
+			<field name="list_price">6.00</field>
+			<field name="categ_id" ref="product_category_accessories"/>
+		</record>
+
+	</data>
+</odoo>

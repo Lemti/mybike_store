@@ -1,0 +1,441 @@
+/* MyBike Store - Styles personnalisés */
+
+/* === Variables === */
+:root {
+    --primary-color: #2E7D32;
+    --secondary-color: #FFA000;
+    --dark-color: #1B5E20;
+    --light-color: #F1F8E9;
+    --accent-color: #FF6F00;
+    --text-dark: #212121;
+    --text-light: #757575;
+}
+
+/* === Header & Navigation === */
+.mybike-header {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--dark-color) 100%);
+    padding: 20px 0;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.mybike-logo {
+    font-size: 32px;
+    font-weight: bold;
+    color: white;
+    text-decoration: none;
+}
+
+.mybike-nav {
+    display: flex;
+    gap: 30px;
+    align-items: center;
+}
+
+.mybike-nav a {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.mybike-nav a:hover {
+    color: var(--secondary-color);
+}
+
+/* === Hero Section === */
+.mybike-hero {
+    background: linear-gradient(135deg, rgba(46, 125, 50, 0.9) 0%, rgba(27, 94, 32, 0.9) 100%),
+                url('/mybike_store/static/src/img/hero-bg.jpg') center/cover;
+    padding: 120px 0;
+    color: white;
+    text-align: center;
+}
+
+.mybike-hero h1 {
+    font-size: 56px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+.mybike-hero p {
+    font-size: 24px;
+    margin-bottom: 40px;
+    opacity: 0.95;
+}
+
+.mybike-hero .btn {
+    margin: 0 10px;
+    padding: 15px 40px;
+    font-size: 18px;
+    border-radius: 50px;
+    transition: all 0.3s ease;
+}
+
+.mybike-hero .btn-primary {
+    background: var(--secondary-color);
+    border: none;
+}
+
+.mybike-hero .btn-primary:hover {
+    background: var(--accent-color);
+    transform: translateY(-3px);
+    box-shadow: 0 5px 20px rgba(255, 160, 0, 0.4);
+}
+
+.mybike-hero .btn-outline-light:hover {
+    background: white;
+    color: var(--primary-color);
+    transform: translateY(-3px);
+}
+
+/* === Features Section === */
+.mybike-features {
+    padding: 80px 0;
+    background: var(--light-color);
+}
+
+.feature-card {
+    text-align: center;
+    padding: 40px 20px;
+    background: white;
+    border-radius: 15px;
+    transition: all 0.3s ease;
+    height: 100%;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.feature-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 30px rgba(46, 125, 50, 0.2);
+}
+
+.feature-icon {
+    font-size: 64px;
+    color: var(--primary-color);
+    margin-bottom: 20px;
+}
+
+.feature-card h3 {
+    color: var(--dark-color);
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.feature-card p {
+    color: var(--text-light);
+    line-height: 1.6;
+}
+
+/* === Product Cards === */
+.bike-card {
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+    background: white;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.bike-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+}
+
+.bike-card-img {
+    height: 250px;
+    object-fit: cover;
+    width: 100%;
+}
+
+.bike-card-body {
+    padding: 25px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.bike-category-badge {
+    display: inline-block;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+.badge-city {
+    background: #E3F2FD;
+    color: #1976D2;
+}
+
+.badge-mountain {
+    background: #FFF3E0;
+    color: #F57C00;
+}
+
+.badge-electric {
+    background: #E8F5E9;
+    color: #388E3C;
+}
+
+.badge-road {
+    background: #FCE4EC;
+    color: #C2185B;
+}
+
+.bike-card h3 {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: var(--text-dark);
+}
+
+.bike-specs {
+    list-style: none;
+    padding: 0;
+    margin: 15px 0;
+    flex-grow: 1;
+}
+
+.bike-specs li {
+    padding: 8px 0;
+    border-bottom: 1px solid #f0f0f0;
+    font-size: 14px;
+    color: var(--text-light);
+}
+
+.bike-specs li:last-child {
+    border-bottom: none;
+}
+
+.bike-price {
+    font-size: 28px;
+    font-weight: bold;
+    color: var(--primary-color);
+    margin: 15px 0;
+}
+
+.bike-rental-prices {
+    background: #F5F5F5;
+    padding: 15px;
+    border-radius: 10px;
+    margin: 15px 0;
+}
+
+.bike-rental-prices .price-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.bike-rental-prices .price-item:last-child {
+    margin-bottom: 0;
+}
+
+.bike-status {
+    display: inline-block;
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    margin-top: 10px;
+}
+
+.status-available {
+    background: #C8E6C9;
+    color: #2E7D32;
+}
+
+.status-rented {
+    background: #FFECB3;
+    color: #F57F17;
+}
+
+.status-maintenance {
+    background: #FFCDD2;
+    color: #C62828;
+}
+
+/* === Buttons === */
+.btn-mybike {
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 25px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-mybike:hover {
+    background: var(--dark-color);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(46, 125, 50, 0.3);
+}
+
+.btn-mybike-secondary {
+    background: var(--secondary-color);
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 25px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-mybike-secondary:hover {
+    background: var(--accent-color);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(255, 160, 0, 0.3);
+}
+
+/* === Rental Booking Form === */
+.rental-booking-form {
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.rental-booking-form h2 {
+    color: var(--primary-color);
+    margin-bottom: 30px;
+    font-weight: 600;
+}
+
+.form-group label {
+    font-weight: 600;
+    color: var(--text-dark);
+    margin-bottom: 8px;
+}
+
+.form-control {
+    border-radius: 10px;
+    border: 2px solid #E0E0E0;
+    padding: 12px 15px;
+    transition: border-color 0.3s ease;
+}
+
+.form-control:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.2rem rgba(46, 125, 50, 0.25);
+}
+
+/* === Section Titles === */
+.section-title {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.section-title h2 {
+    font-size: 42px;
+    font-weight: bold;
+    color: var(--dark-color);
+    margin-bottom: 15px;
+}
+
+.section-title p {
+    font-size: 18px;
+    color: var(--text-light);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* === Footer === */
+.mybike-footer {
+    background: var(--dark-color);
+    color: white;
+    padding: 60px 0 30px;
+    margin-top: 80px;
+}
+
+.footer-section h4 {
+    color: var(--secondary-color);
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+.footer-section ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-section ul li {
+    margin-bottom: 10px;
+}
+
+.footer-section a {
+    color: rgba(255,255,255,0.8);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-section a:hover {
+    color: var(--secondary-color);
+}
+
+.footer-bottom {
+    text-align: center;
+    padding-top: 30px;
+    margin-top: 30px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    color: rgba(255,255,255,0.6);
+}
+
+/* === Responsive === */
+@media (max-width: 768px) {
+    .mybike-hero h1 {
+        font-size: 36px;
+    }
+    
+    .mybike-hero p {
+        font-size: 18px;
+    }
+    
+    .section-title h2 {
+        font-size: 32px;
+    }
+    
+    .bike-card-img {
+        height: 200px;
+    }
+}
+
+/* === Animations === */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in-up {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+/* === Custom Scrollbar === */
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--primary-color);
+    border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--dark-color);
+}

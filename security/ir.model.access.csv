@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_rental_order_user,mybike.rental.order.user,model_mybike_rental_order,sales_team.group_sale_salesman,1,1,1,0
+access_rental_order_manager,mybike.rental.order.manager,model_mybike_rental_order,sales_team.group_sale_manager,1,1,1,1
+access_rental_order_line_user,mybike.rental.order.line.user,model_mybike_rental_order_line,sales_team.group_sale_salesman,1,1,1,0
+access_rental_order_line_manager,mybike.rental.order.line.manager,model_mybike_rental_order_line,sales_team.group_sale_manager,1,1,1,1
+access_rental_contract_user,mybike.rental.contract.user,model_mybike_rental_contract,sales_team.group_sale_salesman,1,1,1,0
+access_rental_contract_manager,mybike.rental.contract.manager,model_mybike_rental_contract,sales_team.group_sale_manager,1,1,1,1

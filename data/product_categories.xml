@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Catégorie principale Vélos -->
+        <record id="product_category_bikes" model="product.category">
+            <field name="name">Vélos</field>
+        </record>
+
+        <!-- Sous-catégories -->
+        <record id="product_category_city_bikes" model="product.category">
+            <field name="name">Vélos de Ville</field>
+            <field name="parent_id" ref="product_category_bikes"/>
+        </record>
+
+        <record id="product_category_mountain_bikes" model="product.category">
+            <field name="name">VTT</field>
+            <field name="parent_id" ref="product_category_bikes"/>
+        </record>
+
+        <record id="product_category_road_bikes" model="product.category">
+            <field name="name">Vélos de Route</field>
+            <field name="parent_id" ref="product_category_bikes"/>
+        </record>
+
+        <record id="product_category_electric_bikes" model="product.category">
+            <field name="name">Vélos Électriques</field>
+            <field name="parent_id" ref="product_category_bikes"/>
+        </record>
+
+        <record id="product_category_kids_bikes" model="product.category">
+            <field name="name">Vélos Enfants</field>
+            <field name="parent_id" ref="product_category_bikes"/>
+        </record>
+
+        <!-- Catégorie Accessoires -->
+        <record id="product_category_accessories" model="product.category">
+            <field name="name">Accessoires Vélo</field>
+        </record>
+
+        <!-- Catégorie Pièces Détachées -->
+        <record id="product_category_parts" model="product.category">
+            <field name="name">Pièces Détachées</field>
+        </record>
+    </data>
+</odoo>

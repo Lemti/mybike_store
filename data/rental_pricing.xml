@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Configuration des prix de location par défaut -->
+        <!-- Ces valeurs peuvent être personnalisées par vélo -->
+        
+        <!-- Prix indicatifs Location Vélo de Ville -->
+        <!-- Heure: 5€, Jour: 15€, Semaine: 60€, Mois: 200€ -->
+        
+        <!-- Prix indicatifs VTT -->
+        <!-- Heure: 8€, Jour: 25€, Semaine: 100€, Mois: 300€ -->
+        
+        <!-- Prix indicatifs Vélo Électrique -->
+        <!-- Heure: 10€, Jour: 35€, Semaine: 150€, Mois: 450€ -->
+        
+        <!-- Cautions recommandées -->
+        <!-- Vélo standard: 200€ -->
+        <!-- VTT/Vélo Route: 300€ -->
+        <!-- Vélo Électrique: 500€ -->
+    </data>
+</odoo>

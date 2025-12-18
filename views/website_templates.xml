@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Page d'accueil -->
+    <template id="homepage" name="MyBike Store Homepage">
+        <t t-call="website.layout">
+            <div id="wrap" class="oe_structure">
+                <!-- Hero Section -->
+                <section class="mybike-hero">
+                    <div class="container">
+                        <h1 class="fade-in-up">Bike Store</h1>
+                        <p class="fade-in-up">Votre Expert en Vélos à Bruxelles</p>
+                        <div class="fade-in-up">
+                            <a href="/shop" class="btn btn-primary btn-lg">Acheter un Vélo</a>
+                            <a href="/rental" class="btn btn-outline-light btn-lg">Louer un Vélo</a>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Features Section -->
+                <section class="mybike-features">
+                    <div class="container">
+                        <div class="section-title">
+                            <h2>Pourquoi Choisir Bike Store ?</h2>
+                            <p>Votre satisfaction est notre priorité</p>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4 mb-4">
+                                <div class="feature-card">
+                                    <div class="feature-icon">🚴</div>
+                                    <h3>Large Choix</h3>
+                                    <p>Plus de 100 vélos en stock : ville, VTT, route, électrique</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-4">
+                                <div class="feature-card">
+                                    <div class="feature-icon">⚡</div>
+                                    <h3>Location Flexible</h3>
+                                    <p>À l'heure, à la journée, à la semaine ou au mois</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-4">
+                                <div class="feature-card">
+                                    <div class="feature-icon">🔧</div>
+                                    <h3>Service Expert</h3>
+                                    <p>Conseil personnalisé et atelier de réparation</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Featured Bikes -->
+                <section class="py-5">
+                    <div class="container">
+                        <div class="section-title">
+                            <h2>Vélos en Vedette</h2>
+                            <p>Découvrez notre sélection de vélos neufs</p>
+                        </div>
+                        <div class="row">
+                            <t t-foreach="featured_bikes" t-as="bike">
+                                <div class="col-md-4 mb-4">
+                                    <div class="bike-card">
+                                        <img t-if="bike.image_1920" 
+                                             class="bike-card-img" 
+                                             t-att-src="image_data_uri(bike.image_1920)"
+                                             t-att-alt="bike.name"/>
+                                        <div class="bike-card-body">
+                                            <span t-if="bike.bike_category" 
+                                                  t-attf-class="bike-category-badge badge-#{bike.bike_category}">
+                                                <t t-if="bike.bike_category == 'city'">Ville</t>
+                                                <t t-if="bike.bike_category == 'mountain'">VTT</t>
+                                                <t t-if="bike.bike_category == 'electric'">Électrique</t>
+                                                <t t-if="bike.bike_category == 'road'">Route</t>
+                                            </span>
+                                            <h3><t t-esc="bike.name"/></h3>
+                                            <div class="bike-price">
+                                                <t t-esc="bike.list_price"/> €
+                                            </div>
+                                            <a t-attf-href="/shop/product/#{bike.id}" class="btn btn-mybike btn-block">
+                                                Voir les détails
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </t>
+                        </div>
+                        <div class="text-center mt-4">
+                            <a href="/shop" class="btn btn-mybike btn-lg">Voir tous les vélos</a>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Rental Section -->
+                <section class="py-5 bg-light">
+                    <div class="container">
+                        <div class="section-title">
+                            <h2>Location de Vélos</h2>
+                            <p>Des vélos disponibles à l'heure, à la journée ou au mois</p>
+                        </div>
+                        <div class="row">
+                            <t t-foreach="rental_bikes" t-as="bike">
+                                <div class="col-md-3 mb-4">
+                                    <div class="bike-card">
+                                        <img t-if="bike.image_1920" 
+                                             class="bike-card-img" 
+                                             t-att-src="image_data_uri(bike.image_1920)"
+                                             t-att-alt="bike.name"/>
+                                        <div class="bike-card-body">
+                                            <h3><t t-esc="bike.name"/></h3>
+                                            <div class="bike-rental-prices">
+                                                <div class="price-item">
+                                                    <span>Heure</span>
+                                                    <strong><t t-esc="bike.rental_price_hour"/> €</strong>
+                                                </div>
+                                                <div class="price-item">
+                                                    <span>Jour</span>
+                                                    <strong><t t-esc="bike.rental_price_day"/> €</strong>
+                                                </div>
+                                            </div>
+                                            <span t-attf-class="bike-status status-#{bike.rental_state}">
+                                                <t t-if="bike.rental_state == 'available'">Disponible</t>
+                                                <t t-if="bike.rental_state == 'rented'">Loué</t>
+                                            </span>
+                                            <a t-attf-href="/rental/bike/#{bike.id}" class="btn btn-mybike-secondary btn-block mt-3">
+                                                Réserver
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </t>
+                        </div>
+                        <div class="text-center mt-4">
+                            <a href="/rental" class="btn btn-mybike-secondary btn-lg">Voir tous les vélos à louer</a>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- CTA Section -->
+                <section class="py-5" style="background: linear-gradient(135deg, var(--primary-color) 0%, var(--dark-color) 100%);">
+                    <div class="container text-center text-white">
+                        <h2 class="mb-4">Prêt à Pédaler ?</h2>
+                        <p class="lead mb-4">Visitez-nous en magasin ou réservez en ligne</p>
+                        <a href="/contact" class="btn btn-light btn-lg">Nous Contacter</a>
+                    </div>
+                </section>
+            </div>
+        </t>
+    </template>
+
+    <!-- Menu principal -->
+    <template id="mybike_header" name="MyBike Header" inherit_id="website.layout">
+        <xpath expr="//header" position="replace">
+            <header class="mybike-header">
+                <div class="container">
+                    <div class="row align-items-center">
+                        <div class="col-md-3">
+                            <a href="/" class="mybike-logo">🚴 BikeStore</a>
+                        </div>
+                        <div class="col-md-9">
+                            <nav class="mybike-nav justify-content-end">
+                                <a href="/">Accueil</a>
+                                <a href="/shop">Acheter</a>
+                                <a href="/rental">Louer</a>
+                                <a href="/about">À Propos</a>
+                                <a href="/contact">Contact</a>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </header>
+        </xpath>
+    </template>
+
+    <!-- Footer -->
+    <template id="mybike_footer" name="MyBike Footer" inherit_id="website.layout">
+        <xpath expr="//div[@id='footer']" position="replace">
+            <footer class="mybike-footer">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-4 footer-section">
+                            <h4>Bike Store</h4>
+                            <p>Votre magasin de vélos de confiance à Bruxelles depuis 2010.</p>
+                            <p>📍 Rue de la Paix 123, 1000 Bruxelles</p>
+                            <p>📞 +32 2 123 45 67</p>
+                            <p>✉️ contact@bikestore.be</p>
+                        </div>
+                        <div class="col-md-4 footer-section">
+                            <h4>Liens Rapides</h4>
+                            <ul>
+                                <li><a href="/shop">Acheter un Vélo</a></li>
+                                <li><a href="/rental">Louer un Vélo</a></li>
+                                <li><a href="/about">À Propos</a></li>
+                                <li><a href="/contact">Contact</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-md-4 footer-section">
+                            <h4>Horaires</h4>
+                            <p>Lundi - Vendredi: 9h - 18h</p>
+                            <p>Samedi: 9h - 17h</p>
+                            <p>Dimanche: Fermé</p>
+                        </div>
+                    </div>
+                    <div class="footer-bottom">
+                        <p>© 2025 Bike Store - Tous droits réservés</p>
+                    </div>
+                </div>
+            </footer>
+        </xpath>
+    </template>
+
+    <!-- Page À Propos -->
+    <template id="about_page" name="About Page">
+        <t t-call="website.layout">
+            <div id="wrap" class="oe_structure">
+                <section class="py-5">
+                    <div class="container">
+                        <div class="section-title">
+                            <h2>À Propos de Bike Store</h2>
+                            <p>Votre expert vélo depuis 2010</p>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h3>Notre Histoire</h3>
+                                <p>Bike Store est un magasin familial fondé en 2010 au cœur de Bruxelles. Notre passion pour le cyclisme nous pousse à offrir les meilleurs vélos et un service client exceptionnel.</p>
+                                
+                                <h3 class="mt-4">Notre Mission</h3>
+                                <p>Rendre le vélo accessible à tous, que ce soit par l'achat ou la location. Nous croyons que le vélo est le moyen de transport du futur : écologique, économique et bon pour la santé.</p>
+                            </div>
+                            <div class="col-md-6">
+                                <h3>Nos Services</h3>
+                                <ul>
+                                    <li>Vente de vélos neufs toutes catégories</li>
+                                    <li>Location flexible (heure, jour, semaine, mois)</li>
+                                    <li>Atelier de réparation</li>
+                                    <li>Conseil personnalisé</li>
+                                    <li>Livraison à domicile</li>
+                                </ul>
+
+                                <h3 class="mt-4">Nous Trouver</h3>
+                                <p><strong>Adresse:</strong> Rue de la Paix 123, 1000 Bruxelles</p>
+                                <p><strong>Téléphone:</strong> +32 2 123 45 67</p>
+                                <p><strong>Email:</strong> contact@mybike.be</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </t>
+    </template>
+
+    <!-- Page Contact -->
+    <template id="contact_page" name="Contact Page">
+        <t t-call="website.layout">
+            <div id="wrap" class="oe_structure">
+                <section class="py-5">
+                    <div class="container">
+                        <div class="section-title">
+                            <h2>Contactez-Nous</h2>
+                            <p>Nous sommes là pour vous aider</p>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="rental-booking-form">
+                                    <h3>Envoyez-nous un Message</h3>
+                                    <form action="/contactus" method="post">
+                                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                        <div class="form-group">
+                                            <label>Nom *</label>
+                                            <input type="text" name="name" class="form-control" required="required"/>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Email *</label>
+                                            <input type="email" name="email" class="form-control" required="required"/>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Téléphone</label>
+                                            <input type="tel" name="phone" class="form-control"/>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Message *</label>
+                                            <textarea name="message" class="form-control" rows="5" required="required"></textarea>
+                                        </div>
+                                        <button type="submit" class="btn btn-mybike btn-lg btn-block">Envoyer</button>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <h3>Informations</h3>
+                                <div class="mb-4">
+                                    <h5>📍 Adresse</h5>
+                                    <p>Rue de la Paix 123<br/>1000 Bruxelles<br/>Belgique</p>
+                                </div>
+                                <div class="mb-4">
+                                    <h5>📞 Téléphone</h5>
+                                    <p>+32 2 123 45 67</p>
+                                </div>
+                                <div class="mb-4">
+                                    <h5>✉️ Email</h5>
+                                    <p>contact@bikestore.be</p>
+                                </div>
+                                <div class="mb-4">
+                                    <h5>⏰ Horaires</h5>
+                                    <p>Lundi - Vendredi: 9h - 18h<br/>
+                                    Samedi: 9h - 17h<br/>
+                                    Dimanche: Fermé</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </t>
+    </template>
+</odoo>

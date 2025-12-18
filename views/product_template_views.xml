@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<!-- Vue formulaire produit avec onglet Vélo -->
+	<record id="product_template_form_view_inherit_mybike" model="ir.ui.view">
+		<field name="name">product.template.form.inherit.mybike</field>
+		<field name="model">product.template</field>
+		<field name="inherit_id" ref="product.product_template_form_view"/>
+		<field name="arch" type="xml">
+
+			<!-- Ajouter un onglet Vélo -->
+			<xpath expr="//notebook" position="inside">
+				<page string="Vélo" name="bike_info">
+					<group>
+						<group string="Informations Vélo">
+							<field name="bike_category"/>
+							<field name="bike_brand"/>
+							<field name="bike_model"/>
+							<field name="bike_year"/>
+							<field name="frame_size"/>
+							<field name="wheel_size"/>
+							<field name="serial_number"/>
+						</group>
+
+						<group string="Caractéristiques Électriques" invisible="bike_category != 'electric'">
+							<field name="is_electric" invisible="1"/>
+							<field name="battery_capacity"/>
+							<field name="motor_power"/>
+							<field name="autonomy_km"/>
+						</group>
+					</group>
+
+					<separator string="Location"/>
+					<group>
+						<group string="Configuration Location">
+							<field name="is_rental"/>
+							<field name="rental_state" invisible="not is_rental"/>
+							<field name="rental_deposit" invisible="not is_rental"/>
+						</group>
+
+						<group string="Tarifs Location" invisible="not is_rental">
+							<field name="rental_price_hour"/>
+							<field name="rental_price_day"/>
+							<field name="rental_price_week"/>
+							<field name="rental_price_month"/>
+						</group>
+					</group>
+
+					<separator string="Statistiques" invisible="not is_rental"/>
+					<group invisible="not is_rental">
+						<group>
+							<field name="total_rental_hours" readonly="1"/>
+							<field name="total_rental_revenue" readonly="1"/>
+						</group>
+						<group>
+							<field name="last_rental_date" readonly="1"/>
+							<field name="maintenance_notes"/>
+						</group>
+					</group>
+				</page>
+			</xpath>
+
+		</field>
+	</record>
+
+</odoo>

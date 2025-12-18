@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Publier tous les vélos de vente -->
+        <function model="product.template" name="write">
+            <value eval="[ref('bike_city_001'), ref('bike_city_002'), ref('bike_city_003'),
+                          ref('bike_mountain_001'), ref('bike_mountain_002'), ref('bike_mountain_003'),
+                          ref('bike_electric_001'), ref('bike_electric_002'), ref('bike_electric_003'),
+                          ref('bike_kids_001'), ref('bike_kids_002')]"/>
+            <value eval="{'is_published': True}"/>
+        </function>
+
+        <!-- Publier tous les vélos de location -->
+        <function model="product.template" name="write">
+            <value eval="[ref('rental_city_001'), ref('rental_city_002'),
+                          ref('rental_mountain_001'), 
+                          ref('rental_electric_001'), ref('rental_electric_002')]"/>
+            <value eval="{'is_published': True}"/>
+        </function>
+
+        <!-- Publier tous les accessoires -->
+        <function model="product.template" name="write">
+            <value eval="[ref('accessory_helmet'), ref('accessory_lock'), 
+                          ref('accessory_pump'), ref('accessory_lights'), ref('accessory_bell')]"/>
+            <value eval="{'is_published': True}"/>
+        </function>
+    </data>
+</odoo>

@@ -1,0 +1,359 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Catalogue de location -->
+    <template id="rental_catalog_template" name="Rental Catalog">
+        <t t-call="website.layout">
+            <div id="wrap" class="oe_structure">
+                <section class="py-5">
+                    <div class="container">
+                        <div class="section-title">
+                            <h2>Location de Vélos</h2>
+                            <p>Choisissez votre vélo et partez à l'aventure</p>
+                        </div>
+
+                        <!-- Filtres -->
+                        <div class="row mb-4">
+                            <div class="col-md-12">
+                                <div class="btn-group" role="group">
+                                    <a href="/rental" class="btn btn-outline-primary">Tous</a>
+                                    <a href="/rental?bike_type=city" class="btn btn-outline-primary">Ville</a>
+                                    <a href="/rental?bike_type=mountain" class="btn btn-outline-primary">VTT</a>
+                                    <a href="/rental?bike_type=electric" class="btn btn-outline-primary">Électrique</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Liste des vélos -->
+                        <div class="row">
+                            <t t-foreach="bikes" t-as="bike">
+                                <div class="col-md-4 mb-4">
+                                    <div class="bike-card">
+                                        <img t-if="bike.image_1920" 
+                                             class="bike-card-img" 
+                                             t-att-src="image_data_uri(bike.image_1920)"
+                                             t-att-alt="bike.name"/>
+                                        <div class="bike-card-body">
+                                            <h3 t-esc="bike.name"/>
+                                            
+                                            <div class="bike-rental-prices">
+                                                <div class="price-item">
+                                                    <span>Par heure</span>
+                                                    <strong><t t-esc="bike.rental_price_hour"/> €</strong>
+                                                </div>
+                                                <div class="price-item">
+                                                    <span>Par jour</span>
+                                                    <strong><t t-esc="bike.rental_price_day"/> €</strong>
+                                                </div>
+                                                <div class="price-item">
+                                                    <span>Par semaine</span>
+                                                    <strong><t t-esc="bike.rental_price_week"/> €</strong>
+                                                </div>
+                                                <div class="price-item">
+                                                    <span>Par mois</span>
+                                                    <strong><t t-esc="bike.rental_price_month"/> €</strong>
+                                                </div>
+                                            </div>
+
+                                            <div class="mt-3">
+                                                <p><strong>Caution:</strong> <t t-esc="bike.rental_deposit"/> €</p>
+                                            </div>
+
+                                            <span t-attf-class="bike-status status-#{bike.rental_state}">
+                                                <t t-if="bike.rental_state == 'available'">✓ Disponible</t>
+                                                <t t-if="bike.rental_state == 'rented'">✗ Loué</t>
+                                                <t t-if="bike.rental_state == 'maintenance'">🔧 Maintenance</t>
+                                            </span>
+
+                                            <a t-attf-href="/rental/bike/#{bike.id}" class="btn btn-mybike-secondary btn-block mt-3">
+                                                Voir &amp; Réserver
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </t>
+                        </div>
+
+                        <div t-if="not bikes" class="alert alert-info text-center">
+                            <h4>Aucun vélo disponible dans cette catégorie</h4>
+                            <a href="/rental" class="btn btn-primary mt-3">Voir tous les vélos</a>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </t>
+    </template>
+
+    <!-- Détails vélo de location -->
+    <template id="rental_bike_detail_template" name="Rental Bike Detail">
+        <t t-call="website.layout">
+            <div id="wrap" class="oe_structure">
+                <section class="py-5">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <img t-if="bike.image_1920" 
+                                     class="img-fluid rounded" 
+                                     t-att-src="image_data_uri(bike.image_1920)"
+                                     t-att-alt="bike.name"/>
+                            </div>
+                            <div class="col-md-6">
+                                <h1 t-esc="bike.name"/>
+                                
+                                <div class="my-4">
+                                    <h3>Tarifs de Location</h3>
+                                    <table class="table table-bordered">
+                                        <tr>
+                                            <td>Par heure</td>
+                                            <td class="text-right"><strong><t t-esc="bike.rental_price_hour"/> €</strong></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Par jour</td>
+                                            <td class="text-right"><strong><t t-esc="bike.rental_price_day"/> €</strong></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Par semaine</td>
+                                            <td class="text-right"><strong><t t-esc="bike.rental_price_week"/> €</strong></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Par mois</td>
+                                            <td class="text-right"><strong><t t-esc="bike.rental_price_month"/> €</strong></td>
+                                        </tr>
+                                        <tr class="table-warning">
+                                            <td><strong>Caution</strong></td>
+                                            <td class="text-right"><strong><t t-esc="bike.rental_deposit"/> €</strong></td>
+                                        </tr>
+                                    </table>
+                                </div>
+
+                                <div class="my-4">
+                                    <h3>Caractéristiques</h3>
+                                    <ul class="bike-specs">
+                                        <li t-if="bike.bike_brand">Marque: <strong><t t-esc="bike.bike_brand"/></strong></li>
+                                        <li t-if="bike.bike_model">Modèle: <strong><t t-esc="bike.bike_model"/></strong></li>
+                                        <li t-if="bike.frame_size">Taille: <strong><t t-esc="bike.frame_size"/></strong></li>
+                                        <li t-if="bike.is_electric">Type: <strong>Vélo Électrique</strong></li>
+                                        <li t-if="bike.battery_capacity">Batterie: <strong><t t-esc="bike.battery_capacity"/> Wh</strong></li>
+                                        <li t-if="bike.autonomy_km">Autonomie: <strong><t t-esc="bike.autonomy_km"/> km</strong></li>
+                                    </ul>
+                                </div>
+
+                                <div class="my-4">
+                                    <span t-attf-class="bike-status status-#{bike.rental_state}" style="font-size: 18px; padding: 12px 30px;">
+                                        <t t-if="bike.rental_state == 'available'">✓ Disponible Maintenant</t>
+                                        <t t-if="bike.rental_state == 'rented'">✗ Actuellement Loué</t>
+                                        <t t-if="bike.rental_state == 'maintenance'">🔧 En Maintenance</t>
+                                    </span>
+                                </div>
+
+                                <div class="mt-4">
+                                    <a t-if="bike.rental_state == 'available'" t-attf-href="/rental/booking?bike_id=#{bike.id}" class="btn btn-mybike-secondary btn-lg btn-block">
+                                        Réserver Ce Vélo
+                                    </a>
+                                    <a t-if="bike.rental_state != 'available'" href="/rental" class="btn btn-secondary btn-lg btn-block">
+                                        Voir Autres Vélos
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </t>
+    </template>
+
+    <!-- Formulaire de réservation -->
+    <template id="rental_booking_form_template" name="Rental Booking Form">
+        <t t-call="website.layout">
+            <div id="wrap" class="oe_structure">
+                <section class="py-5">
+                    <div class="container">
+                        <div class="rental-booking-form">
+                            <h2>Réserver un Vélo</h2>
+                            
+                            <form action="/rental/booking/submit" method="post">
+                                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="bike_id">Vélo *</label>
+                                            <select name="bike_id" id="bike_id" class="form-control" required="required">
+                                                <option value="">Choisissez un vélo...</option>
+                                                <t t-foreach="bikes" t-as="bike">
+                                                    <option t-att-value="bike.id" t-att-selected="'selected' if selected_bike and selected_bike.id == bike.id else None">
+                                                        <t t-esc="bike.name"/> - <t t-esc="bike.rental_price_day"/>€/jour
+                                                    </option>
+                                                </t>
+                                            </select>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="rental_type">Type de Location *</label>
+                                            <select name="rental_type" id="rental_type" class="form-control" required="required">
+                                                <option value="hour">À l'heure</option>
+                                                <option value="day" selected="selected">À la journée</option>
+                                                <option value="week">À la semaine</option>
+                                                <option value="month">Au mois</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="start_date">Date et Heure de Début *</label>
+                                            <input type="datetime-local" name="start_date" id="start_date" class="form-control" required="required"/>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="end_date">Date et Heure de Fin *</label>
+                                            <input type="datetime-local" name="end_date" id="end_date" class="form-control" required="required"/>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="text-center mt-4">
+                                    <button type="submit" class="btn btn-mybike-secondary btn-lg">
+                                        Confirmer la Réservation
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </t>
+    </template>
+
+    <!-- Confirmation réservation -->
+    <template id="rental_confirmation_template" name="Rental Confirmation">
+        <t t-call="website.layout">
+            <div id="wrap" class="oe_structure">
+                <section class="py-5">
+                    <div class="container">
+                        <div class="text-center">
+                            <h1 class="text-success">✓ Réservation Confirmée !</h1>
+                            <p class="lead">Votre demande de location a été enregistrée.</p>
+                            
+                            <div class="alert alert-info mt-4">
+                                <h4>Référence: <t t-esc="order.name"/></h4>
+                                <p>Montant total: <strong><t t-esc="order.amount_total"/> €</strong></p>
+                            </div>
+
+                            <div class="mt-4">
+                                <a href="/my/rentals" class="btn btn-mybike mr-2">Voir mes locations</a>
+                                <a href="/rental" class="btn btn-mybike-secondary">Louer un autre vélo</a>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </t>
+    </template>
+
+    <!-- Mes Locations -->
+    <template id="my_rentals_template" name="My Rentals">
+        <t t-call="website.layout">
+            <div id="wrap" class="oe_structure">
+                <section class="py-5">
+                    <div class="container">
+                        <div class="section-title">
+                            <h2>Mes Locations</h2>
+                            <p>Historique de vos locations de vélos</p>
+                        </div>
+
+                        <!-- Contrats actifs -->
+                        <div class="mb-5" t-if="contracts">
+                            <h3>Locations en Cours</h3>
+                            <div class="table-responsive">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>N° Contrat</th>
+                                            <th>Vélo</th>
+                                            <th>Début</th>
+                                            <th>Fin Prévue</th>
+                                            <th>Prix</th>
+                                            <th>Statut</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <t t-foreach="contracts" t-as="contract">
+                                            <tr>
+                                                <td><t t-esc="contract.name"/></td>
+                                                <td><t t-esc="contract.product_id.name"/></td>
+                                                <td><t t-esc="contract.start_date"/></td>
+                                                <td><t t-esc="contract.end_date"/></td>
+                                                <td><t t-esc="contract.total_price"/> €</td>
+                                                <td>
+                                                    <span t-if="contract.state == 'ongoing'" class="badge bg-success">En cours</span>
+                                                    <span t-if="contract.state == 'confirmed'" class="badge bg-info">Confirmé</span>
+                                                    <span t-if="contract.state == 'returned'" class="badge bg-warning">Retourné</span>
+                                                    <span t-if="contract.state == 'closed'" class="badge bg-secondary">Clôturé</span>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- Commandes -->
+                        <div t-if="orders">
+                            <h3>Mes Commandes</h3>
+                            <div class="table-responsive">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Référence</th>
+                                            <th>Date</th>
+                                            <th>Montant</th>
+                                            <th>Statut</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <t t-foreach="orders" t-as="order">
+                                            <tr>
+                                                <td><t t-esc="order.name"/></td>
+                                                <td><t t-esc="order.order_date"/></td>
+                                                <td><t t-esc="order.amount_total"/> €</td>
+                                                <td>
+                                                    <span t-if="order.state == 'draft'" class="badge bg-secondary">Brouillon</span>
+                                                    <span t-if="order.state == 'sent'" class="badge bg-info">Envoyé</span>
+                                                    <span t-if="order.state == 'confirmed'" class="badge bg-success">Confirmé</span>
+                                                    <span t-if="order.state == 'cancelled'" class="badge bg-danger">Annulé</span>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div t-if="not contracts and not orders" class="alert alert-info text-center">
+                            <h4>Aucune location pour le moment</h4>
+                            <a href="/rental" class="btn btn-mybike-secondary mt-3">Louer un Vélo</a>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </t>
+    </template>
+
+    <!-- Erreur réservation -->
+    <template id="rental_booking_error" name="Rental Booking Error">
+        <t t-call="website.layout">
+            <div id="wrap" class="oe_structure">
+                <section class="py-5">
+                    <div class="container text-center">
+                        <h1 class="text-danger">Erreur</h1>
+                        <p class="lead">Une erreur s'est produite lors de votre réservation.</p>
+                        <div class="alert alert-danger">
+                            <t t-esc="error"/>
+                        </div>
+                        <a href="/rental" class="btn btn-primary mt-3">Retour</a>
+                    </div>
+                </section>
+            </div>
+        </t>
+    </template>
+</odoo>
