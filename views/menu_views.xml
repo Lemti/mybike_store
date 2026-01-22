@@ -1,1 +1,63 @@
-<?xml version="1.0" encoding="utf-8"?><odoo><data></data></odoo>
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Menu principal MyBike -->
+    <menuitem id="menu_mybike_root"
+              name="MyBike"
+              sequence="10"/>
+
+    <!-- Section Ventes -->
+    <menuitem id="menu_mybike_sales"
+              name="Ventes"
+              parent="menu_mybike_root"
+              sequence="10"/>
+
+    <menuitem id="menu_sale_orders"
+              name="Commandes Clients"
+              parent="menu_mybike_sales"
+              action="sale.action_orders"
+              sequence="10"/>
+
+    <!-- Section Locations -->
+    <menuitem id="menu_mybike_rentals"
+              name="Locations"
+              parent="menu_mybike_root"
+              sequence="20"/>
+
+    <menuitem id="menu_rental_contracts"
+              name="Contrats de Location"
+              parent="menu_mybike_rentals"
+              action="action_rental_contract"
+              sequence="10"/>
+
+
+    <!-- Section Produits -->
+    <menuitem id="menu_mybike_products"
+              name="Produits"
+              parent="menu_mybike_root"
+              sequence="30"/>
+
+    <menuitem id="menu_products"
+              name="Vélos"
+              parent="menu_mybike_products"
+              action="product.product_template_action"
+              sequence="10"/>
+
+    <!-- Section Configuration -->
+    <menuitem id="menu_mybike_config"
+              name="Configuration"
+              parent="menu_mybike_root"
+              sequence="90"/>
+
+    <menuitem id="menu_customers"
+              name="Clients"
+              parent="menu_mybike_config"
+              action="base.action_partner_form"
+              sequence="10"/>
+
+    <menuitem id="menu_product_categories"
+              name="Catégories"
+              parent="menu_mybike_config"
+              action="product.product_category_action_form"
+              sequence="20"/>
+
+</odoo>

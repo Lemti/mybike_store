@@ -1,1 +1,38 @@
-<?xml version="1.0" encoding="utf-8"?><odoo><data></data></odoo>
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Vue formulaire wizard de retour -->
+    <record id="view_rental_return_wizard_form" model="ir.ui.view">
+        <field name="name">mybike.rental.return.wizard.form</field>
+        <field name="model">mybike.rental.return.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Retour de Vélo">
+                <group>
+                    <group>
+                        <field name="contract_id" invisible="1"/>
+                        <field name="return_date"/>
+                        <field name="condition_return"/>
+                    </group>
+                    <group>
+                        <field name="damage_reported"/>
+                        <field name="deposit_deduction"/>
+                    </group>
+                </group>
+
+                <group invisible="damage_reported == False">
+                    <field name="damage_description" placeholder="Décrivez les dommages constatés..."/>
+                    <field name="deduction_reason" placeholder="Justifiez la déduction de caution..."/>
+                </group>
+
+                <group>
+                    <field name="notes" placeholder="Notes supplémentaires..."/>
+                </group>
+
+                <footer>
+                    <button name="action_confirm_return" string="Confirmer le Retour"
+                            type="object" class="oe_highlight"/>
+                    <button string="Annuler" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

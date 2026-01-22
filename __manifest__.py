@@ -51,41 +51,39 @@
     ],
     
     'data': [
-        # Sécurité
+        # Sécurité - Définit les droits d'accès aux modèles
         'security/ir.model.access.csv',
-        
-        # Données de base
+
+        # Données de base - Catégories, tarifs et séquences
         'data/product_categories.xml',
         'data/rental_pricing.xml',
         'data/sequence.xml',
-        
-        # Vues
+
+        # Rapports - Chargés avant les vues pour éviter les erreurs de référence
+        'report/rental_contract_report.xml',
+
+        # Wizards - Assistants pour les actions utilisateur
+        'wizard/rental_return_wizard_views.xml',
+
+        # Vues - Interfaces utilisateur
         'views/product_template_views.xml',
-        'views/rental_order_views.xml',
         'views/rental_contract_views.xml',
         'views/res_partner_views.xml',
         'views/menu_views.xml',
-        
-        # Website
+
+        # Website - Templates du site web public
         'views/website_templates.xml',
         'views/website_rental_templates.xml',
-        
-        # Rapports
-        'report/rental_contract_report.xml',
-        'report/sales_report_views.xml',
-        
-        # Wizards
-        'wizard/rental_return_wizard_views.xml',
     ],
-    
-    'assets': {
-        'web.assets_frontend': [
-            'mybike_store/static/src/css/mybike_store.css',
-            'mybike_store/static/src/js/rental_booking.js',
-        ],
-    },
-    
-'demo': [
+
+    # 'assets': {
+    #     'web.assets_frontend': [
+    #         'mybike_store/static/src/css/mybike_store.css',
+    #         'mybike_store/static/src/js/rental_booking.js',
+    #     ],
+    # },
+
+    'demo': [
     'demo/demo_products.xml',
     'demo/publish_products.xml',  # <-- AJOUTE CETTE LIGNE
     'demo/demo_customers.xml',

@@ -1,1 +1,231 @@
-<?xml version="1.0" encoding="utf-8"?><odoo><data></data></odoo>
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Définition du rapport PDF -->
+    <record id="action_report_rental_invoice" model="ir.actions.report">
+        <field name="name">Facture de Location</field>
+        <field name="model">mybike.rental.contract</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">mybike_store.report_rental_invoice_document</field>
+        <field name="report_file">mybike_store.report_rental_invoice_document</field>
+        <field name="binding_model_id" ref="model_mybike_rental_contract"/>
+        <field name="binding_type">report</field>
+        <field name="print_report_name">'Facture_Location_%s' % (object.name)</field>
+    </record>
+
+    <!-- Template du rapport -->
+    <template id="report_rental_invoice_document">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="contract">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <!-- En-tête -->
+                        <div class="row mb-4">
+                            <div class="col-6">
+                                <h2>Facture de Location</h2>
+                                <p>
+                                    <strong>N° Contrat:</strong> <span t-field="contract.name"/><br/>
+                                    <strong>Date:</strong> <span t-field="contract.actual_return_date" t-options='{"widget": "date"}'/><br/>
+                                    <t t-if="contract.invoice_id">
+                                        <strong>N° Facture:</strong> <span t-field="contract.invoice_id.name"/><br/>
+                                    </t>
+                                </p>
+                            </div>
+                            <div class="col-6 text-end">
+                                <h3>Client</h3>
+                                <div>
+                                    <strong><span t-field="contract.partner_id.name"/></strong><br/>
+                                    <span t-field="contract.partner_id.street"/><br/>
+                                    <t t-if="contract.partner_id.street2">
+                                        <span t-field="contract.partner_id.street2"/><br/>
+                                    </t>
+                                    <span t-field="contract.partner_id.zip"/> <span t-field="contract.partner_id.city"/><br/>
+                                    <t t-if="contract.partner_id.phone">
+                                        Tél: <span t-field="contract.partner_id.phone"/><br/>
+                                    </t>
+                                    <t t-if="contract.partner_id.email">
+                                        Email: <span t-field="contract.partner_id.email"/><br/>
+                                    </t>
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr/>
+
+                        <!-- Informations de la location -->
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <h4>Détails de la Location</h4>
+                                <table class="table table-sm">
+                                    <tr>
+                                        <td width="30%"><strong>Vélo loué:</strong></td>
+                                        <td><span t-field="contract.product_id.display_name"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Type de location:</strong></td>
+                                        <td><span t-field="contract.rental_type"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Date début:</strong></td>
+                                        <td><span t-field="contract.start_date"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Date fin prévue:</strong></td>
+                                        <td><span t-field="contract.end_date"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Date retour réelle:</strong></td>
+                                        <td><span t-field="contract.actual_return_date"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>État au départ:</strong></td>
+                                        <td><span t-field="contract.bike_condition_start"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>État au retour:</strong></td>
+                                        <td><span t-field="contract.bike_condition_return"/></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- Détail des montants -->
+                        <div class="row">
+                            <div class="col-12">
+                                <h4>Détail de la Facturation</h4>
+                                <table class="table table-bordered">
+                                    <thead style="background-color: #f8f9fa;">
+                                        <tr>
+                                            <th>Description</th>
+                                            <th class="text-end">Quantité</th>
+                                            <th class="text-end">Prix unitaire</th>
+                                            <th class="text-end">Montant</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!-- Location de base -->
+                                        <tr>
+                                            <td>
+                                                Location <span t-field="contract.product_id.name"/>
+                                                (<span t-field="contract.rental_type"/>)
+                                            </td>
+                                            <td class="text-end">
+                                                <span t-esc="'%.2f' % contract.duration"/>
+                                                <t t-if="contract.rental_type == 'hour'">h</t>
+                                                <t t-elif="contract.rental_type == 'day'">j</t>
+                                                <t t-elif="contract.rental_type == 'week'">sem.</t>
+                                                <t t-elif="contract.rental_type == 'month'">mois</t>
+                                            </td>
+                                            <td class="text-end"><span t-esc="'%.2f €' % contract.unit_price"/></td>
+                                            <td class="text-end"><strong><span t-esc="'%.2f €' % contract.subtotal"/></strong></td>
+                                        </tr>
+
+                                        <!-- Frais de retard -->
+                                        <t t-if="contract.late_fee > 0">
+                                            <tr>
+                                                <td>Frais de retard</td>
+                                                <td class="text-end">1</td>
+                                                <td class="text-end"><span t-esc="'%.2f €' % contract.late_fee"/></td>
+                                                <td class="text-end"><span t-esc="'%.2f €' % contract.late_fee"/></td>
+                                            </tr>
+                                        </t>
+
+                                        <!-- Frais de dommages -->
+                                        <t t-if="contract.damage_fee > 0">
+                                            <tr>
+                                                <td>
+                                                    Frais de dommages
+                                                    <t t-if="contract.damage_description">
+                                                        <br/><small class="text-muted"><span t-field="contract.damage_description"/></small>
+                                                    </t>
+                                                </td>
+                                                <td class="text-end">1</td>
+                                                <td class="text-end"><span t-esc="'%.2f €' % contract.damage_fee"/></td>
+                                                <td class="text-end"><span t-esc="'%.2f €' % contract.damage_fee"/></td>
+                                            </tr>
+                                        </t>
+
+                                        <!-- Frais supplémentaires -->
+                                        <t t-if="contract.additional_fees > 0">
+                                            <tr>
+                                                <td>Frais supplémentaires</td>
+                                                <td class="text-end">1</td>
+                                                <td class="text-end"><span t-esc="'%.2f €' % contract.additional_fees"/></td>
+                                                <td class="text-end"><span t-esc="'%.2f €' % contract.additional_fees"/></td>
+                                            </tr>
+                                        </t>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- Total et caution -->
+                        <div class="row">
+                            <div class="col-7"></div>
+                            <div class="col-5">
+                                <table class="table table-sm">
+                                    <tr>
+                                        <td><strong>Sous-total HT:</strong></td>
+                                        <td class="text-end"><span t-esc="'%.2f €' % contract.total_price"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>TVA (21%):</strong></td>
+                                        <td class="text-end"><span t-esc="'%.2f €' % (contract.total_price * 0.21)"/></td>
+                                    </tr>
+                                    <tr style="border-top: 2px solid #000;">
+                                        <td><strong>TOTAL TTC:</strong></td>
+                                        <td class="text-end"><strong><span t-esc="'%.2f €' % (contract.total_price * 1.21)"/></strong></td>
+                                    </tr>
+                                    <tr style="border-top: 1px solid #ddd;">
+                                        <td>Caution versée:</td>
+                                        <td class="text-end"><span t-esc="'%.2f €' % contract.deposit_amount"/></td>
+                                    </tr>
+                                    <t t-if="contract.deposit_deduction > 0">
+                                        <tr>
+                                            <td>
+                                                Déduction caution:
+                                                <t t-if="contract.deduction_reason">
+                                                    <br/><small class="text-muted"><span t-field="contract.deduction_reason"/></small>
+                                                </t>
+                                            </td>
+                                            <td class="text-end">- <span t-esc="'%.2f €' % contract.deposit_deduction"/></td>
+                                        </tr>
+                                    </t>
+                                    <tr>
+                                        <td><strong>Caution à restituer:</strong></td>
+                                        <td class="text-end">
+                                            <strong>
+                                                <span t-esc="'%.2f €' % (contract.deposit_amount - contract.deposit_deduction)"/>
+                                            </strong>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- Notes -->
+                        <t t-if="contract.condition_notes">
+                            <div class="row mt-4">
+                                <div class="col-12">
+                                    <h5>Notes:</h5>
+                                    <p><span t-field="contract.condition_notes"/></p>
+                                </div>
+                            </div>
+                        </t>
+
+                        <!-- Pied de page -->
+                        <div class="row mt-5">
+                            <div class="col-12 text-center">
+                                <p class="text-muted">
+                                    <small>
+                                        Merci pour votre confiance !<br/>
+                                        Pour toute question concernant cette facture, contactez-nous.
+                                    </small>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

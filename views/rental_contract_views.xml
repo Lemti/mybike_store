@@ -1,1 +1,126 @@
-<?xml version="1.0" encoding="utf-8"?><odoo><data></data></odoo>
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Vue formulaire contrat de location -->
+    <record id="view_rental_contract_form" model="ir.ui.view">
+        <field name="name">mybike.rental.contract.form</field>
+        <field name="model">mybike.rental.contract</field>
+        <field name="arch" type="xml">
+            <form string="Contrat de Location">
+                <header>
+                    <button name="action_confirm" string="Confirmer" type="object"
+                            invisible="state != 'draft'" class="oe_highlight"/>
+                    <button name="action_start_rental" string="Vélo Retiré" type="object"
+                            invisible="state != 'confirmed'" class="oe_highlight"/>
+                    <button name="action_return_bike" string="Retourner le Vélo" type="object"
+                            invisible="state != 'ongoing'" class="oe_highlight"/>
+                    <button name="action_close_contract" string="Clôturer" type="object"
+                            invisible="state != 'returned'" class="oe_highlight"/>
+                    <button name="%(mybike_store.action_report_rental_invoice)d" string="Télécharger Facture PDF"
+                            type="action"
+                            invisible="state not in ('returned', 'closed')"
+                            class="btn-primary"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,confirmed,ongoing,returned,closed"/>
+                </header>
+
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+
+                    <group>
+                        <group string="Informations Client">
+                            <field name="partner_id" required="1"/>
+                        </group>
+                        <group string="Informations Location">
+                            <field name="product_id" required="1"/>
+                            <field name="rental_type" required="1"/>
+                            <field name="start_date" required="1"/>
+                            <field name="end_date" required="1"/>
+                        </group>
+                    </group>
+
+                    <group>
+                        <group string="Tarification">
+                            <field name="unit_price" required="1"/>
+                            <field name="duration"/>
+                            <field name="subtotal"/>
+                            <field name="total_price"/>
+                        </group>
+                        <group string="Caution">
+                            <field name="deposit_amount" required="1"/>
+                            <field name="deposit_paid"/>
+                        </group>
+                    </group>
+
+                    <notebook>
+                        <page string="Détails">
+                            <group>
+                                <group string="Frais">
+                                    <field name="late_fee"/>
+                                    <field name="damage_fee"/>
+                                    <field name="additional_fees"/>
+                                </group>
+                                <group string="État Vélo">
+                                    <field name="bike_condition_start"/>
+                                    <field name="bike_condition_return"/>
+                                </group>
+                            </group>
+                            <field name="condition_notes" placeholder="Notes..."/>
+                        </page>
+                        <page string="Retour et Dommages" invisible="state in ('draft', 'confirmed', 'ongoing')">
+                            <group>
+                                <group string="Informations Retour">
+                                    <field name="actual_return_date"/>
+                                    <field name="damage_reported"/>
+                                    <field name="deposit_deduction"/>
+                                    <field name="deposit_returned"/>
+                                </group>
+                                <group string="Détails Dommages" invisible="not damage_reported">
+                                    <field name="damage_description" placeholder="Description des dommages..."/>
+                                    <field name="deduction_reason" placeholder="Raison de la déduction..."/>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- Vue liste contrats -->
+    <record id="view_rental_contract_tree" model="ir.ui.view">
+        <field name="name">mybike.rental.contract.tree</field>
+        <field name="model">mybike.rental.contract</field>
+        <field name="arch" type="xml">
+            <list string="Contrats de Location">
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="product_id"/>
+                <field name="start_date"/>
+                <field name="total_price"/>
+                <field name="state"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_rental_contract" model="ir.actions.act_window">
+        <field name="name">Contrats de Location</field>
+        <field name="res_model">mybike.rental.contract</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Créer un contrat de location
+            </p>
+        </field>
+    </record>
+
+</odoo>
